@@ -15,5 +15,9 @@ export const routes = [
         path:"/add",
         element:<AddContact/>
     },
+    {
+        path:"/edit/:id",
+        element:<AddContact isEditContact/>
+    },
 
 ]

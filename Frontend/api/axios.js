@@ -32,7 +32,7 @@ try {
 
 const delReq = async (path) => {
 try {
-    const res = await apiClient.delete(path,data);
+    const res = await apiClient.delete(path);
     return res;
 } catch (error) {
     console.log(error)
