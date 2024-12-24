@@ -11,19 +11,19 @@ export const contactSlice = createSlice(
         initialState,
         reducers:{
             setContacts:(state,{payload})=>{
-                return state.contacts = payload
+             state.contacts = payload
             },
             addContact:(state,{payload})=>{
-                return state.contacts.push(payload)
+                 state.contacts.push(payload)
             },
             updContact:(state,{payload})=>{
                 const index = state.contacts.findIndex((item)=>(item._id == payload ))
                 if(index !== -1){
-                    return state.contacts[index] = payload
+                     state.contacts[index] = payload
                 }
             },
             delContact:(state,{payload})=>{
-                return state.contacts =  state.contacts.filter((item)=>(item._id !==payload))
+                 state.contacts =  state.contacts.filter((item)=>(item._id !==payload))
             }
         }
     }
