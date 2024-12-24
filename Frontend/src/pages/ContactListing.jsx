@@ -5,6 +5,7 @@ import { delContact,  setContacts } from "../store/features/contactReducer";
 import { useNavigate } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
 import { MdOutlineEdit, MdDelete } from "react-icons/md";
+import { IoMdPersonAdd } from "react-icons/io";
 import dummyImg from "/assets/images/avatar.gif";
 function ContactListing() {
   const [searchTerm,setSearchTerm ] = useState('')
@@ -62,11 +63,12 @@ function ContactListing() {
 
   return (
     <div className="w-full bg-[#F5F5FA] p-6">
-      <div className="container mx-auto">
+      <div className="container mx-auto ">
         <h1 className="font-semibold opacity-75 text-2xl mb-4 text-center">
           Search for a contact
         </h1>
-        <div className="search-area flex items-center border rounded-full px-4 py-2 bg-white shadow-sm">
+      <div className="flex items-center space-x-2">
+      <div className="w-full search-area flex items-center border rounded-full px-4 py-2 bg-white shadow-sm">
           <input
             type="text"
             className="w-full outline-none"
@@ -76,8 +78,10 @@ function ContactListing() {
              onChange={(e)=>setSearchTerm(e.target.value)}
             
           />
-          <CiSearch className="w-6 h-6 text-gray-500" />
+          <CiSearch className="w-5 h-5  text-gray-500" />
         </div>
+        <div onClick={()=>navigate("/add")} className="add rounded-full p-2  bg-blue-500"><IoMdPersonAdd className="w-5 h-5  text-white " /></div>
+      </div>
       </div>
 
       <div className="contacts mt-6">

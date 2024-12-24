@@ -44,18 +44,55 @@ function AddContact({ isEditContact }) {
   console.log(watch("example")); // watch input value by passing the name of it
 
   return (
-    <div>
-      <h1>{isEditContact ? "Edit Contact" : "Add Contact"}</h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <input className="border " type="text" {...register("userName")} />
-        <input className="border " type="number" {...register("phoneNumber")} />
-        <input className="border " type="text" {...register("Email")} />
-        <input className="border " type="date" {...register("DateofBirth")} />
-        <input className="border " type="text" {...register("designation")} />
-
-        <input type="submit" />
+    <div className="min-h-screen bg-[#F5F5FA] flex items-center justify-center p-4">
+    <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-lg">
+      <h1 className="text-2xl font-semibold text-gray-800 mb-4 text-center">
+        {isEditContact ? "Edit Contact" : "Add Contact"}
+      </h1>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="space-y-4"
+      >
+        <input
+          className="border border-gray-300 rounded-md w-full px-4 py-2 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          type="text"
+          placeholder="Username"
+          {...register("userName")}
+        />
+        <input
+          className="border border-gray-300 rounded-md w-full px-4 py-2 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          type="number"
+          placeholder="Phone Number"
+          {...register("phoneNumber")}
+        />
+        <input
+          className="border border-gray-300 rounded-md w-full px-4 py-2 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          type="text"
+          placeholder="Email"
+          {...register("Email")}
+        />
+        <input
+          className="border border-gray-300 rounded-md w-full px-4 py-2 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          type="date"
+          {...register("DateofBirth")}
+        />
+        <input
+          className="border border-gray-300 rounded-md w-full px-4 py-2 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          type="text"
+          placeholder="Designation"
+          {...register("designation")}
+        />
+  
+        <button
+          type="submit"
+          className="bg-blue-500 text-white font-medium rounded-md w-full py-2 hover:bg-blue-600 transition duration-300"
+        >
+          {isEditContact ? "Update Contact" : "Add Contact"}
+        </button>
       </form>
     </div>
+  </div>
+  
   );
 }
 
