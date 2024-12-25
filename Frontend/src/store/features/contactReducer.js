@@ -23,6 +23,7 @@ export const contactSlice = createSlice({
     delContact: (state, { payload }) => {
       state.contacts = state.contacts.filter((item) => item._id !== payload);
     },
+  
     // filterContact: (state, { payload }) => {
     //     state.contacts = state.contacts.filter((item) =>
     //       Object.values(item).some((value) =>
@@ -39,6 +40,7 @@ export const {
   addContact,
   updContact,
   delContact,
+  viewContact
 } = contactSlice.actions;
 
 export default contactSlice.reducer;

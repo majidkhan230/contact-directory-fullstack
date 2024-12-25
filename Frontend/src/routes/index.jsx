@@ -8,7 +8,7 @@ export const routes = [
         element:<ContactListing/>
     },
     {
-        path:"/view",
+        path:"/view/:id",
         element:<ViewContact/>
     },
     {

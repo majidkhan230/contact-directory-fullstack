@@ -90,7 +90,10 @@ function ContactListing() {
             key={index}
             className="flex justify-between items-center px-4 py-2 bg-white rounded-lg shadow-sm mb-2"
           >
-            <div className="flex items-center">
+            <div 
+            className="flex items-center cursor-pointer " 
+            onClick={()=>navigate(`/view/${contact._id}`)}
+            >
               <img
                 src={dummyImg}
                 alt={contact.userName}
