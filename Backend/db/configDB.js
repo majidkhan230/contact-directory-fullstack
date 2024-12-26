@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 
 async function connectDB() {
     try {
-        await mongoose.connect(process.env.MONGODB_URI); // Options are no longer needed
+        await mongoose.connect(process.env.MONGODB_URI); 
         console.log('DB is successfully connected');
     } catch (error) {
         console.error({
