@@ -22,9 +22,7 @@ const viewContact = async(req,res)=>{
 const viewAllContacts = async(req,res)=>{
     try {
         
-        const users = await contactModel.find({
-
-        })
+        const users = await contactModel.find()
         res.status(200).send(
             {
                 message:"OK",
