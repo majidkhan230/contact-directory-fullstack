@@ -1,14 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { postReq, updReq } from "../../api/axios";
-import { redirect, useNavigate, useParams } from "react-router-dom";
+import { redirect, useLocation, useNavigate, useParams } from "react-router-dom";
 import { updContact } from "../store/features/contactReducer";
 
 function AddContact({ isEditContact }) {
   const allContacts = useSelector((state) => state.contacts.contacts);
   console.log(allContacts);
 
+  const location = useLocation();
+  const contactToEdit = location.state?.contact || {};
+  // console.log(contactToEdit)
   const dispatch = useDispatch()
   
   
@@ -21,9 +24,20 @@ function AddContact({ isEditContact }) {
     register,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors },
   } = useForm();
 
+  useEffect(()=>{
+    if (isEditContact && contactToEdit) {
+      setValue("userName", contactToEdit.userName);
+      setValue("phoneNumber", contactToEdit.phoneNumber);
+      setValue("Email", contactToEdit.Email);
+      setValue("DateofBirth", contactToEdit.DateofBirth);
+      setValue("designation", contactToEdit.designation);
+    }
+  },[isEditContact,contactToEdit,setValue])
+  
   const onSubmit = async (data) => {
     if (isEditContact) {
       const res = await updReq(`contact/update/${id}`, data);

@@ -123,7 +123,7 @@ function ContactListing() {
               <div className="flex space-x-2">
                 <button
                   className="bg-blue-500 text-white p-2 rounded-full hover:bg-blue-600 mr-2"
-                  onClick={() => navigate(`/edit/${contact._id}`)}
+                  onClick={() => navigate(`/edit/${contact._id}`,{state:{contact}})}
                 >
                   <MdOutlineEdit className="w-5 h-5" />
                 </button>
