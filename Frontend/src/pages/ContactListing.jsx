@@ -1,22 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { delReq, getReq, updReq } from "../../api/axios";
 import { useDispatch, useSelector } from "react-redux";
-import { delContact,  setContacts } from "../store/features/contactReducer";
+import { delContact, setContacts } from "../store/features/contactReducer";
 import { useNavigate } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
 import { MdOutlineEdit, MdDelete } from "react-icons/md";
 import { IoMdPersonAdd } from "react-icons/io";
 import dummyImg from "/assets/images/avatar.gif";
+
 function ContactListing() {
-  const [searchTerm,setSearchTerm ] = useState('')
-  const [loading,setLoading] = useState(true)
+  const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false); 
   
   const navigate = useNavigate();
-  
   const { contacts } = useSelector((state) => state.contacts);
-  console.log({ contacts });
-
-  // const [filterData,setFilterData ] = useState(contacts)
 
   const filteredContacts = contacts.filter((item) =>
     Object.values(item).some((value) =>
@@ -24,82 +22,76 @@ function ContactListing() {
     )
   );
 
-  // if(filteredContacts){
-  //   setLoading(false)
-  // }
-
-  
-
   const dispatch = useDispatch();
 
   // getAllContacts
   const getAllContacts = async () => {
-    setLoading(true); // Set loading to true before fetching
+    setLoading(true); 
+    setError(false); 
     try {
       const res = await getReq("contact/view");
       const data = await res?.data?.users;
-      dispatch(setContacts(data));
+      if (data && Array.isArray(data)) {
+        dispatch(setContacts(data));
+      } else {
+        dispatch(setContacts([]));
+      }
     } catch (error) {
       console.error("Error fetching contacts:", error);
+      setError(true); 
     } finally {
-      setLoading(false); // Set loading to false after fetching
+      setLoading(false); 
     }
   };
+
   useEffect(() => {
     getAllContacts();
   }, []);
 
-  //onEdit
   const onEdit = (id) => {
     navigate(`/edit/${id}`);
   };
 
-  //onDelete
-
   const onDelete = async (id) => {
-    await delReq(`contact/delete/${id}`);
-    dispatch(delContact(id));
+    try {
+      await delReq(`contact/delete/${id}`);
+      dispatch(delContact(id));
+    } catch (error) {
+      console.error("Error deleting contact:", error);
+    }
   };
-
-  //onSearch
-
-  // const onSearch = (e) => {
-  //   e.preventDefault()
-  //   setSearchTerm(e.target.value)
-  // const filtered =  contacts.filter((item)=>{
-  //     return Object.values(item).some(value=>value.toString().toLowerCase().includes(searchTerm.toLowerCase()))
-  //   })
-  //   setFilterData(filtered)
-  // };
-
-  
 
   return (
     <div className="w-full bg-[#F5F5FA] p-6">
-      <div className="container mx-auto ">
+      <div className="container mx-auto">
         <h1 className="font-semibold opacity-75 text-2xl mb-4 text-center">
           Search for a contact
         </h1>
-      <div className="flex items-center space-x-2">
-      <div className="w-full search-area flex items-center border rounded-full px-4 py-2 bg-white shadow-sm">
-          <input
-            type="text"
-            className="w-full outline-none"
-            placeholder="Name, email or phone number"
-            value = {searchTerm}
-            // onChange={(e)=>onSearch(e)}
-             onChange={(e)=>setSearchTerm(e.target.value)}
-            
-          />
-          <CiSearch className="w-5 h-5  text-gray-500" />
+        <div className="flex items-center space-x-2">
+          <div className="w-full search-area flex items-center border rounded-full px-4 py-2 bg-white shadow-sm">
+            <input
+              type="text"
+              className="w-full outline-none"
+              placeholder="Name, email or phone number"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            <CiSearch className="w-5 h-5 text-gray-500" />
+          </div>
+          <div
+            onClick={() => navigate("/add")}
+            className="add rounded-full p-2 bg-blue-500"
+          >
+            <IoMdPersonAdd className="w-5 h-5 text-white" />
+          </div>
         </div>
-        <div onClick={()=>navigate("/add")} className="add rounded-full p-2  bg-blue-500"><IoMdPersonAdd className="w-5 h-5  text-white " /></div>
-      </div>
       </div>
 
       <div className="contacts mt-6">
         {loading ? (
           <p className="text-center text-gray-500">Loading contacts...</p>
+        ) : error ? ( // Check for error state
+          <p className="text-center text-red-500">Failed to fetch contacts. Please try again later.</p>
         ) : filteredContacts.length > 0 ? (
           filteredContacts.reverse().map((contact, index) => (
             <div
@@ -123,7 +115,7 @@ function ContactListing() {
               <div className="flex space-x-2">
                 <button
                   className="bg-blue-500 text-white p-2 rounded-full hover:bg-blue-600 mr-2"
-                  onClick={() => navigate(`/edit/${contact._id}`,{state:{contact}})}
+                  onClick={() => navigate(`/edit/${contact._id}`, { state: { contact } })}
                 >
                   <MdOutlineEdit className="w-5 h-5" />
                 </button>
@@ -146,4 +138,4 @@ function ContactListing() {
   );
 }
 
-export default ContactListing
+export default ContactListing;
