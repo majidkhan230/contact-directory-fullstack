@@ -85,7 +85,7 @@ function ContactListing() {
       </div>
 
       <div className="contacts mt-6">
-        {filteredContacts?.map((contact, index) => (
+        {filteredContacts?.reverse().map((contact, index) => (
           <div
             key={index}
             className="flex justify-between items-center px-4 py-2 bg-white rounded-lg shadow-sm mb-2"
