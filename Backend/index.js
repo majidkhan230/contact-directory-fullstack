@@ -2,6 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
 import contactRoutes from './routes/contactRoutes.js'
+import connectDB from './db/configDB.js'
 
 
 const app = express()
@@ -18,6 +19,12 @@ app.get('/',(req,res)=>{
 
 app.use('/contact',contactRoutes)
 
+const PORT =process.env.PORT || 8080
+
+app.listen(PORT,()=>{
+    console.log(`server is sucessfully running on ${PORT}`)
+    connectDB()
+})
 
 
 export default app
